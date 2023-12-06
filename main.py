@@ -56,8 +56,19 @@ graph_component = dcc.Graph(id='world-map', figure=fig)
 # url_classement = 'https://rsf.org/sites/default/files/import_classement/2023.csv'
 df_classement = pd.read_csv(
     "./data/country_press_global_score_2023_fr.csv", delimiter=';', decimal=',')
-selected_columns_classement = ['Country_FR', 'Score', 'Rank']
+selected_columns_classement = ['ISO','Country_FR', 'Score', 'Rank']
 df_selected_cla = df_classement[selected_columns_classement]
+fig = px.choropleth(df_selected_cla,
+                    locations='ISO', 
+                    color='Score',
+                    hover_name='Country_FR',
+                    hover_data={'ISO': False, 'Country_FR': False, 'Score': True, 'Rank': True},
+                    title='Carte du Monde avec Frontières et Scores de Liberté de la Presse',
+                    projection='natural earth',
+                    color_continuous_scale=[
+                        'purple', 'red', 'orange', 'yellow', 'green'], 
+                    scope='world',
+                    )
 
 # info_press = 'https://rsf.org/sites/default/files/import_classement/2023.csv'
 # recup_liberte_press(info_press, ".data/country_press.csv")
