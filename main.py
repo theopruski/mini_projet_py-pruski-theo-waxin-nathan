@@ -35,8 +35,23 @@ recup_contry(info_pays, "./data/country_coord.csv")
 df = pd.read_csv("./data/country_coord.csv")
 selected_columns = ['name', 'latitude', 'longitude']
 df_selected = df[selected_columns]
-fig = px.scatter_geo(df_selected, lat='latitude', lon='longitude',
-                     text='name', projection='natural earth')
+fig = px.choropleth(df_selected,
+                    locations='name',  # Utilisez le nom du pays comme identifiant de lieu
+                    # Colorez en fonction de la latitude (ajustez en fonction de vos besoins)
+                    color='latitude',
+                    hover_name='name',  # Affichez le nom du pays au survol
+                    title='Carte du Monde avec Frontières et Scores de Liberté de la Presse',
+                    projection='natural earth',  # Projection de la carte
+                    color_continuous_scale=[
+                        'green', 'yellow', 'orange', 'red', 'purple'],
+                    )
+fig.update_geos(showcountries=True, countrycolor="Black")
+fig.add_trace(px.scatter_geo(df_selected, lat='latitude',
+              lon='longitude').data[0])
+graph_component = dcc.Graph(id='world-map', figure=fig)
+
+# fig = px.scatter_geo(df_selected, lat='latitude', lon='longitude',
+# text='name', projection='natural earth')
 
 # url_classement = 'https://rsf.org/sites/default/files/import_classement/2023.csv'
 df_classement = pd.read_csv(
