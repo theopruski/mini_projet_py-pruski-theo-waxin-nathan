@@ -57,23 +57,30 @@ fig = px.choropleth(df_selected_cla,
 
 if __name__ == '__main__':
     app = dash.Dash(__name__)
+    app.css.append_css({
+        'external_url': 'https://codepen.io/chriddyp/pen/bWLwgP.css'
+    })
     app.layout = html.Div([
         html.H1("Classement 2023 de la liberté de la presse"),
         dash_table.DataTable(
             id='table-classement',
-            columns=[{"name": col, "id": col}
-                     for col in df_selected_cla.columns],
-            data=df_selected_cla.to_dict('records'),
-            style_table={'width': '30%'},
+            columns=[
+                {"name": "Nom", "id": "Country_FR"}, 
+                {"name": "Score", "id": "Score"}, 
+                 {"name": "Rang", "id": "Rank"}, 
+            ],
+            data=df_selected_cla[['Country_FR', 'Score', 'Rank']].to_dict('records'), 
+            sort_action='native',
+            page_action='native',
+            page_current=0, 
+            page_size=15,
             style_cell={'textAlign': 'left'},
-        ),
+        ), 
         html.H1("Carte du monde avec les coordonnées GPS des pays"),
         dcc.Graph(
             id='world-map',
             figure=fig,
         ),
-
-        
-    ])
+    ], style={'marginRight': 200})
 
     app.run_server(debug=True)
