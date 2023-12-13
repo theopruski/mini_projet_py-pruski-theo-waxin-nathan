@@ -48,8 +48,10 @@ fig = px.choropleth(df_selected_cla,
                     title='Carte du Monde avec Frontières et Scores de Liberté de la Presse',
                     projection='natural earth',
                     color_continuous_scale=[
-                        'purple', 'red', 'orange', 'yellow', 'green'], 
+                        'black', 'red', 'orange', 'yellow', 'green'], 
                     scope='world',
+                    width=1200,
+                    height=800,
                     )
 
 # info_press = 'https://rsf.org/sites/default/files/import_classement/2023.csv'
