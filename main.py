@@ -70,6 +70,7 @@ fig = px.choropleth(merged_df,
 
 app = dash.Dash(__name__)
 
+
 @app.callback(
     Output('world-map', 'figure'),
     Input('world-map', 'clickData')
@@ -86,10 +87,12 @@ def update_geos(clickData):
 
     # Création d'une nouvelle figure pour zoomer sur le pays sélectionné
     fig_zoom = go.Figure(data=go.Choropleth(
-        locations=fig.data[0]['locations'],  # Garder les mêmes emplacements de la carte d'origine
+        # Garder les mêmes emplacements de la carte d'origine
+        locations=fig.data[0]['locations'],
         z=fig.data[0]['z'],  # Garder les mêmes données de la carte d'origine
         colorscale='Viridis',
-        text=fig.data[0]['text'],  # Garder les mêmes textes de la carte d'origine
+        # Garder les mêmes textes de la carte d'origine
+        text=fig.data[0]['text'],
         hoverinfo='text+z',
     ))
 
@@ -115,17 +118,36 @@ def update_country_info(clickData):
         country_score = country_row['Score'].values[0]
         country_rank = country_row['Rank'].values[0]
         commun_style = {"margin-left": "10px"}
-        border_style = { 
+        border_style = {
             'border': 'solid grey',
             'borderRadius': '10px',
             'boxShadow': '2px 2px 4px 0 rgba(0,0,0,0.5)',
             'padding-bottom': '10px'}
         return html.Div([
-            html.P(f"Vous avez sélectionné {country_name}.", style = commun_style),
-            html.P(f"Son score de liberté de la presse est {country_score}.", style = commun_style),
-            html.P(f"Son rang est {country_rank}.", style = commun_style)
+            html.P(
+                f"Vous avez sélectionné {country_name}.", style=commun_style),
+            html.P(
+                f"Son score de liberté de la presse est {country_score}.", style=commun_style),
+            html.P(f"Son rang est {country_rank}.", style=commun_style)
         ],
-        style=border_style),
+            style=border_style),
+
+
+@app.callback(Output("geolocation", "update_now"), Input("update_btn", "n_clicks"))
+def update_now(click):
+    return True if click and click > 0 else False
+
+
+@app.callback(
+    Output("text_position", "children"),
+    Input("geolocation", "position"),
+)
+def display_output(pos):
+    if pos:
+        return html.P(
+            f"Vous êtes localiser en latitude {pos['lat']},longitude {pos['lon']}",
+        )
+    return "Veuillez autoriser la localisation"
 
 
 if __name__ == '__main__':
@@ -163,6 +185,9 @@ if __name__ == '__main__':
                 }
             ]
         ),
+        html.Button("Géolocalisation", id="update_btn"),
+        dcc.Geolocation(id="geolocation"),
+        html.Div(id="text_position"),
         html.H1("Carte du monde avec les coordonnées GPS des pays"),
         dcc.Graph(
             id='world-map',
