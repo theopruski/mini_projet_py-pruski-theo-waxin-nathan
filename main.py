@@ -105,6 +105,20 @@ if __name__ == '__main__':
             page_current=0,
             page_size=15,
             style_cell={'textAlign': 'left'},
+            style_cell_conditional=[
+                {
+                    'if': {'column_id': 'Country_EN'},
+                    'width': '40%'
+                },
+                {
+                    'if': {'column_id': 'Score'},
+                    'width': '20%'
+                },
+                {
+                    'if': {'column_id': 'Rank'},
+                    'width': '20%'
+                }
+            ]
         ),
         html.H1("Carte du monde avec les coordonnées GPS des pays"),
         dcc.Graph(
