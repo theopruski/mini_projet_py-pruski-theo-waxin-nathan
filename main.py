@@ -10,6 +10,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 import plotly.express as px
+import plotly.graph_objs as go
 
 # récupére et stocke les coordonnées gps de tous les pays dans un fichier csv
 
@@ -61,13 +62,44 @@ fig = px.choropleth(merged_df,
                         'black', 'red', 'orange', 'yellow', 'green'],
                     scope='world',
                     width=1200,
-                    height=800,
+                    height=700,
                     )
 
 # info_press = 'https://rsf.org/sites/default/files/import_classement/2023.csv'
 # recup_liberte_press(info_press, ".data/country_press.csv")
 
 app = dash.Dash(__name__)
+
+@app.callback(
+    Output('world-map', 'figure'),
+    Input('world-map', 'clickData')
+)
+def update_geos(clickData):
+    if clickData is None:
+        # Si aucun pays n'est sélectionné, affichez la figure originale sans zoom
+        return fig
+
+    country_iso = clickData['points'][0]['location']
+    selected_country = merged_df[merged_df['ISO'] == country_iso]
+    country_lat = selected_country['latitude'].values[0]
+    country_lon = selected_country['longitude'].values[0]
+
+    # Création d'une nouvelle figure pour zoomer sur le pays sélectionné
+    fig_zoom = go.Figure(data=go.Choropleth(
+        locations=fig.data[0]['locations'],  # Garder les mêmes emplacements de la carte d'origine
+        z=fig.data[0]['z'],  # Garder les mêmes données de la carte d'origine
+        colorscale='Viridis',
+        text=fig.data[0]['text'],  # Garder les mêmes textes de la carte d'origine
+        hoverinfo='text+z',
+    ))
+
+    fig_zoom.update_geos(
+        projection_scale=1,  # Ajustez la valeur de l'échelle pour le niveau de zoom
+        lonaxis_range=[country_lon - 30, country_lon + 30],
+        lataxis_range=[country_lat - 30, country_lat + 50],
+    )
+
+    return fig_zoom
 
 
 @app.callback(
@@ -82,7 +114,18 @@ def update_country_info(clickData):
         country_name = country_row['Country_FR'].values[0]
         country_score = country_row['Score'].values[0]
         country_rank = country_row['Rank'].values[0]
-        return f"Vous avez sélectionné {country_name}. Son score de liberté de la presse est {country_score} et son rang est {country_rank}."
+        commun_style = {"margin-left": "10px"}
+        border_style = { 
+            'border': 'solid grey',
+            'borderRadius': '10px',
+            'boxShadow': '2px 2px 4px 0 rgba(0,0,0,0.5)',
+            'padding-bottom': '10px'}
+        return html.Div([
+            html.P(f"Vous avez sélectionné {country_name}.", style = commun_style),
+            html.P(f"Son score de liberté de la presse est {country_score}.", style = commun_style),
+            html.P(f"Son rang est {country_rank}.", style = commun_style)
+        ],
+        style=border_style),
 
 
 if __name__ == '__main__':
@@ -126,6 +169,6 @@ if __name__ == '__main__':
             figure=fig,
         ),
         html.Div(id='country-info')
-    ], style={'marginRight': 200})
+    ], style={'marginRight': 150})
 
     app.run_server(debug=True)
