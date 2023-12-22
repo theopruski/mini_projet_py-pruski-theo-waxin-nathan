@@ -3,6 +3,7 @@ from dash import dcc
 from dash import html
 from dash import dash_table
 import io
+from geopy.geocoders import Nominatim
 
 from dash.dependencies import Input, Output
 import csv
@@ -11,6 +12,7 @@ import requests
 from bs4 import BeautifulSoup
 import plotly.express as px
 import plotly.graph_objs as go
+from plotly.subplots import make_subplots
 
 # récupére et stocke les coordonnées gps de tous les pays dans un fichier csv
 
@@ -44,8 +46,24 @@ df_selected = df[selected_columns]
 df_classement = pd.read_csv(
     "./data/country_press_global_score_2023.csv", delimiter=';', decimal=',')
 selected_columns_classement = [
-    'ISO', 'Country_FR', 'Country_EN', 'Score', 'Rank']
+    'ISO', 'Country_FR', 'Country_EN', 'Score', 'Rank', 'Political Context', 'Rank_Pol',
+    'Economic Context', 'Rank_Eco', 'Legal Context', 'Rank_Leg', 'Social Context', 'Rank_Soc', 'Safety', 'Rank_Saf']
 df_selected_cla = df_classement[selected_columns_classement]
+
+dropdown_options = [
+    {'label': 'Score', 'value': 'Score'},
+    {'label': 'Rank', 'value': 'Rang'},
+    {'label': 'Political Context', 'value': 'Political Context'},
+    {'label': 'Rank_Pol', 'value': 'Rank_Pol'},
+    {'label': 'Economic Context', 'value': 'Economic Context'},
+    {'label': 'Rank_Eco', 'value': 'Rank_Eco'},
+    {'label': 'Legal Context', 'value': 'Legal Context'},
+    {'label': 'Rank_Leg', 'value': 'Rank_Leg'},
+    {'label': 'Social Context', 'value': 'Social Context'},
+    {'label': 'Rank_Soc', 'value': 'Rank_Soc'},
+    {'label': 'Safety', 'value': 'Safety'},
+    {'label': 'Rank_Saf', 'value': 'Rank_Saf'},
+]
 
 merged_df = pd.merge(df_selected, df_selected_cla,
                      how='inner', left_on='name', right_on='Country_EN')
@@ -55,7 +73,9 @@ fig = px.choropleth(merged_df,
                     color='Score',
                     hover_name='Country_EN',
                     hover_data={'ISO': False, 'Country_FR': False, 'Country_EN': False,
-                                'Score': True, 'Rank': True, 'latitude': False, 'longitude': False},
+                                'Score': True, 'Rank': True, 'Political Context': True, 'Rank_Pol': True, 'Economic Context': True,
+                                'Rank_Eco': True, 'Legal Context': True, 'Rank_Leg': True, 'Social Context': True, 'Rank_Soc': True,
+                                'Safety': True, 'Rank_Saf': True, 'latitude': False, 'longitude': False},
                     title='Carte du Monde avec Frontières et Scores de Liberté de la Presse',
                     projection='natural earth',
                     color_continuous_scale=[
@@ -105,6 +125,9 @@ def update_geos(clickData):
     return fig_zoom
 
 
+geolocator = Nominatim(user_agent="geo")
+
+
 @app.callback(
     Output('country-info', 'children'),
     Input('world-map', 'clickData'))
@@ -117,6 +140,17 @@ def update_country_info(clickData):
         country_name = country_row['Country_FR'].values[0]
         country_score = country_row['Score'].values[0]
         country_rank = country_row['Rank'].values[0]
+        country_political = country_row['Political Context'].values[0]
+        country_rank_pol = country_row['Rank_Pol'].values[0]
+        country_economical = country_row['Economic Context'].values[0]
+        country_rank_eco = country_row['Rank_Eco'].values[0]
+        country_legal = country_row['Legal Context'].values[0]
+        country_rank_leg = country_row['Rank_Leg'].values[0]
+        country_social = country_row['Social Context'].values[0]
+        country_rank_eco = country_row['Rank_Soc'].values[0]
+        country_safety = country_row['Safety'].values[0]
+        country_rank_saf = country_row['Rank_Saf'].values[0]
+
         commun_style = {"margin-left": "10px"}
         border_style = {
             'border': 'solid grey',
@@ -144,8 +178,10 @@ def update_now(click):
 )
 def display_output(pos):
     if pos:
+        location = geolocator.reverse((pos['lat'], pos['lon']), language='en')
+        country_name = location.raw['address'].get('country', '')
         return html.P(
-            f"Vous êtes localiser en latitude {pos['lat']},longitude {pos['lon']}",
+            f"Vous êtes localiser  en {country_name} (latitude {pos['lat']}, longitude {pos['lon']}).",
         )
     return "Veuillez autoriser la localisation"
 
@@ -160,11 +196,22 @@ if __name__ == '__main__':
             id='table-classement',
             columns=[
                 {"name": "Nom", "id": "Country_EN"},
-                {"name": "Score", "id": "Score"},
-                {"name": "Rang", "id": "Rank"},
+                {"name": "Score Global", "id": "Score"},
+                {"name": "Rang Global", "id": "Rank"},
+                {"name": "Contexte politique", "id": "Political Context"},
+                {"name": "Rang politique", "id": "Rank_Pol"},
+                {"name": "Contexte economique", "id": "Economic Context"},
+                {"name": "Rang economique", "id": "Rank_Eco"},
+                {"name": "Contexte legal", "id": "Legal Context"},
+                {"name": "Rang legal", "id": "Rank_Leg"},
+                {"name": "Contexte sociale", "id": "Social Context"},
+                {"name": "Rang sociale", "id": "Rank_Soc"},
+                {"name": "Securite", "id": "Safety"},
+                {"name": "Rang securite", "id": "Rank_Saf"}
             ],
             data=df_selected_cla[['Country_EN',
-                                  'Score', 'Rank']].to_dict('records'),
+                                  'Score', 'Rank', 'Political Context', 'Rank_Pol', 'Economic Context', 'Rank_Eco',
+                                  'Legal Context', 'Rank_Leg', 'Social Context', 'Rank_Soc', 'Safety', 'Rank_Saf']].to_dict('records'),
             sort_action='native',
             page_action='native',
             page_current=0,
@@ -184,6 +231,12 @@ if __name__ == '__main__':
                     'width': '20%'
                 }
             ]
+        ),
+        dcc.Dropdown(
+            id='data-dropdown',
+            options=dropdown_options,
+            value='Score',  # Valeur par défaut
+            multi=True  # Permettre la sélection multiple
         ),
         html.Button("Géolocalisation", id="update_btn"),
         dcc.Geolocation(id="geolocation"),
