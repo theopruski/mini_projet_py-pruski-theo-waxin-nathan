@@ -50,19 +50,16 @@ selected_columns_classement = [
     'Economic Context', 'Rank_Eco', 'Legal Context', 'Rank_Leg', 'Social Context', 'Rank_Soc', 'Safety', 'Rank_Saf']
 df_selected_cla = df_classement[selected_columns_classement]
 
+default_columns = ['Country_EN', 'Score', 'Rank']
+data_table = df_selected_cla[default_columns].to_dict('records')
+
 dropdown_options = [
-    {'label': 'Score', 'value': 'Score'},
-    {'label': 'Rank', 'value': 'Rang'},
-    {'label': 'Political Context', 'value': 'Political Context'},
-    {'label': 'Rank_Pol', 'value': 'Rank_Pol'},
-    {'label': 'Economic Context', 'value': 'Economic Context'},
-    {'label': 'Rank_Eco', 'value': 'Rank_Eco'},
-    {'label': 'Legal Context', 'value': 'Legal Context'},
-    {'label': 'Rank_Leg', 'value': 'Rank_Leg'},
-    {'label': 'Social Context', 'value': 'Social Context'},
-    {'label': 'Rank_Soc', 'value': 'Rank_Soc'},
-    {'label': 'Safety', 'value': 'Safety'},
-    {'label': 'Rank_Saf', 'value': 'Rank_Saf'},
+    {'label': 'Score Global', 'value': 'Score'},
+    {'label': 'Contexte politique', 'value': 'Political Context'},
+    {'label': 'Contexte économique', 'value': 'Economic Context'},
+    {'label': 'Contexte légal', 'value': 'Legal Context'},
+    {'label': 'Contexte social', 'value': 'Social Context'},
+    {'label': 'Sécurité', 'value': 'Safety'},
 ]
 
 merged_df = pd.merge(df_selected, df_selected_cla,
@@ -93,9 +90,10 @@ app = dash.Dash(__name__)
 
 @app.callback(
     Output('world-map', 'figure'),
-    Input('world-map', 'clickData')
+    Input('world-map', 'clickData'),
+    Input('map-dropdown', 'value')
 )
-def update_geos(clickData):
+def update_geos(clickData, selected_variable):
     if clickData is None:
         # Si aucun pays n'est sélectionné, affichez la figure originale sans zoom
         return fig
@@ -105,6 +103,11 @@ def update_geos(clickData):
     country_lat = selected_country['latitude'].values[0]
     country_lon = selected_country['longitude'].values[0]
 
+    fig.update_traces(
+        marker=dict(color=merged_df[selected_variable]),
+        selector=dict(type='choropleth'),
+        customdata=merged_df[selected_variable]
+    )
 
     fig_zoom = go.Figure(fig)
 
@@ -125,10 +128,9 @@ def update_geos(clickData):
             landcolor='lightgray',
             countrycolor='gray',
             framecolor='gray',
-            lakecolor='white', 
+            lakecolor='white',
         )
     )
-
 
     return fig_zoom
 
@@ -138,8 +140,9 @@ geolocator = Nominatim(user_agent="geo")
 
 @app.callback(
     Output('country-info', 'children'),
-    Input('world-map', 'clickData'))
-def update_country_info(clickData):
+    Input('world-map', 'clickData'),
+    Input('map-dropdown', 'value'))
+def update_country_info(clickData, selected_variable):
     if clickData is None:
         return "Cliquez sur un pays pour voir plus d'informations."
     else:
@@ -203,52 +206,42 @@ if __name__ == '__main__':
         dash_table.DataTable(
             id='table-classement',
             columns=[
-                {"name": "Nom", "id": "Country_EN"},
-                {"name": "Score Global", "id": "Score"},
-                {"name": "Rang Global", "id": "Rank"},
-                {"name": "Contexte politique", "id": "Political Context"},
-                {"name": "Rang politique", "id": "Rank_Pol"},
-                {"name": "Contexte economique", "id": "Economic Context"},
-                {"name": "Rang economique", "id": "Rank_Eco"},
-                {"name": "Contexte legal", "id": "Legal Context"},
-                {"name": "Rang legal", "id": "Rank_Leg"},
-                {"name": "Contexte sociale", "id": "Social Context"},
-                {"name": "Rang sociale", "id": "Rank_Soc"},
-                {"name": "Securite", "id": "Safety"},
-                {"name": "Rang securite", "id": "Rank_Saf"}
+                {"id": "ISO", "name": "ISO", "hideable": False},
+                {"id": "Country_EN", "name": "Nom", "hideable": False},
+                {"id": "Score", "name": "Score Global",
+                 "hideable": False},
+                {"id": "Rank", "name": "Rang Global", "hideable": False},
+                {"id": "Political Context",
+                    "name": "Contexte politique", "hideable": True},
+                {"id": "Rank_Pol", "name": "Rang politique", "hideable": True},
+                {"id": "Economic Context",
+                    "name": "Contexte economique", "hideable": True},
+                {"id": "Rank_Eco", "name": "Rang economique", "hideable": True},
+                {"id": "Legal Context", "name": "Contexte legal", "hideable": True},
+                {"id": "Rank_Leg", "name": "Rang legal", "hideable": True},
+                {"id": "Social Context", "name": "Contexte sociale", "hideable": True},
+                {"id": "Rank_Soc", "name": "Rang sociale", "hideable": True},
+                {"id": "Safety", "name": "Securite", "hideable": True},
+                {"id": "Rank_Saf", "name": "Rang securite", "hideable": True}
             ],
-            data=df_selected_cla[['Country_EN',
-                                  'Score', 'Rank', 'Political Context', 'Rank_Pol', 'Economic Context', 'Rank_Eco',
-                                  'Legal Context', 'Rank_Leg', 'Social Context', 'Rank_Soc', 'Safety', 'Rank_Saf']].to_dict('records'),
             sort_action='native',
             page_action='native',
             page_current=0,
             page_size=15,
             style_cell={'textAlign': 'left'},
-            style_cell_conditional=[
-                {
-                    'if': {'column_id': 'Country_EN'},
-                    'width': '40%'
-                },
-                {
-                    'if': {'column_id': 'Score'},
-                    'width': '20%'
-                },
-                {
-                    'if': {'column_id': 'Rank'},
-                    'width': '20%'
-                }
-            ]
-        ),
-        dcc.Dropdown(
-            id='data-dropdown',
-            options=dropdown_options,
-            value='Score',  # Valeur par défaut
-            multi=True  # Permettre la sélection multiple
+            hidden_columns=['Political Context', 'Rank_Pol', 'Economic Context', 'Rank_Eco',
+                            'Legal Context', 'Rank_Leg', 'Social Context', 'Rank_Soc', 'Safety', 'Rank_Saf'],
+            data=df_selected_cla.to_dict('records'),
         ),
         html.Button("Géolocalisation", id="update_btn"),
         dcc.Geolocation(id="geolocation"),
         html.Div(id="text_position"),
+        dcc.Dropdown(
+            id='map-dropdown',
+            options=dropdown_options,
+            value='Score',  # Valeur par défaut
+            multi=False  # Permettre la sélection unique
+        ),
         html.H1("Carte du monde avec les coordonnées GPS des pays"),
         dcc.Graph(
             id='world-map',
