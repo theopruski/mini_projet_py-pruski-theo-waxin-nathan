@@ -105,22 +105,30 @@ def update_geos(clickData):
     country_lat = selected_country['latitude'].values[0]
     country_lon = selected_country['longitude'].values[0]
 
-    # Création d'une nouvelle figure pour zoomer sur le pays sélectionné
-    fig_zoom = go.Figure(data=go.Choropleth(
-        # Garder les mêmes emplacements de la carte d'origine
-        locations=fig.data[0]['locations'],
-        z=fig.data[0]['z'],  # Garder les mêmes données de la carte d'origine
-        colorscale='Viridis',
-        # Garder les mêmes textes de la carte d'origine
-        text=fig.data[0]['text'],
-        hoverinfo='text+z',
-    ))
+
+    fig_zoom = go.Figure(fig)
 
     fig_zoom.update_geos(
-        projection_scale=1,  # Ajustez la valeur de l'échelle pour le niveau de zoom
-        lonaxis_range=[country_lon - 30, country_lon + 30],
-        lataxis_range=[country_lat - 30, country_lat + 50],
+        center={'lon': country_lon, 'lat': country_lat},
+        visible=False,  # Pour éviter un saut de taille lors du centrage
     )
+
+    fig_zoom.update_layout(
+        geo=dict(
+            projection_scale=2,
+            lonaxis=dict(range=[country_lon - 100, country_lon + 100]),
+            lataxis=dict(range=[country_lat - 35, country_lat + 35]),
+            showcountries=True,
+            showland=True,
+            showframe=True,
+            showlakes=True,
+            landcolor='lightgray',
+            countrycolor='gray',
+            framecolor='gray',
+            lakecolor='white', 
+        )
+    )
+
 
     return fig_zoom
 
