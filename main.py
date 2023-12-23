@@ -103,12 +103,6 @@ def update_geos(clickData, selected_variable):
     country_lat = selected_country['latitude'].values[0]
     country_lon = selected_country['longitude'].values[0]
 
-    fig.update_traces(
-        marker=dict(color=merged_df[selected_variable]),
-        selector=dict(type='choropleth'),
-        customdata=merged_df[selected_variable]
-    )
-
     fig_zoom = go.Figure(fig)
 
     fig_zoom.update_geos(
