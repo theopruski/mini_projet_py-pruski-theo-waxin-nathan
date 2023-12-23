@@ -65,26 +65,6 @@ dropdown_options = [
 merged_df = pd.merge(df_selected, df_selected_cla,
                      how='inner', left_on='name', right_on='Country_EN')
 
-fig = px.choropleth(merged_df,
-                    locations='ISO',
-                    color='Score',
-                    hover_name='Country_EN',
-                    hover_data={'ISO': False, 'Country_FR': False, 'Country_EN': False,
-                                'Score': True, 'Rank': True, 'Political Context': True, 'Rank_Pol': True, 'Economic Context': True,
-                                'Rank_Eco': True, 'Legal Context': True, 'Rank_Leg': True, 'Social Context': True, 'Rank_Soc': True,
-                                'Safety': True, 'Rank_Saf': True, 'latitude': False, 'longitude': False},
-                    title='Carte du Monde avec Frontières et Scores de Liberté de la Presse',
-                    projection='natural earth',
-                    color_continuous_scale=[
-                        'black', 'red', 'orange', 'yellow', 'green'],
-                    scope='world',
-                    width=1200,
-                    height=700,
-                    )
-
-# info_press = 'https://rsf.org/sites/default/files/import_classement/2023.csv'
-# recup_liberte_press(info_press, ".data/country_press.csv")
-
 app = dash.Dash(__name__)
 
 
@@ -94,6 +74,40 @@ app = dash.Dash(__name__)
     Input('map-dropdown', 'value')
 )
 def update_geos(clickData, selected_variable):
+    color_scale = {
+        'Score': ['black', 'red', 'orange', 'yellow', 'green'],
+        'Political Context': ['black', 'red', 'orange', 'yellow', 'green'],
+        'Economic Context': ['black', 'red', 'orange', 'yellow', 'green'],
+        'Legal Context': ['black', 'red', 'orange', 'yellow', 'green'],
+        'Social Context': ['black', 'red', 'orange', 'yellow', 'green'],
+        'Safety': ['black', 'red', 'orange', 'yellow', 'green'],
+        # Ajoutez d'autres échelles de couleurs pour les autres contextes
+    }
+    title_map = {
+        'Score': 'Carte du Monde avec Frontières et Scores de Liberté de la Presse',
+        'Political Context': 'Carte des Scores de Contexte Politique par pays',
+        'Economic Context': 'Carte des Scores de Contexte Economique par pays',
+        'Legal Context': 'Carte des Scores de Contexte Legal par pays',
+        'Social Context': 'Carte des Scores de Contexte Social par pays',
+        'Safety': 'Carte des Scores de Securite par pays',
+        # Ajoutez d'autres titres pour les autres contextes
+    }
+    fig = px.choropleth(merged_df,
+                        locations='ISO',
+                        color=selected_variable,
+                        hover_name='Country_EN',
+                        hover_data={'ISO': False, 'Country_FR': False, 'Country_EN': False,
+                                    selected_variable: True, 'Rank': True, 'Political Context': True, 'Rank_Pol': True, 'Economic Context': True,
+                                    'Rank_Eco': True, 'Legal Context': True, 'Rank_Leg': True, 'Social Context': True, 'Rank_Soc': True,
+                                    'Safety': True, 'Rank_Saf': True, 'latitude': False, 'longitude': False},
+                        title=title_map[selected_variable],
+                        projection='natural earth',
+                        color_continuous_scale=color_scale[selected_variable],
+                        scope='world',
+                        width=1200,
+                        height=700,
+                        )
+
     if clickData is None:
         # Si aucun pays n'est sélectionné, affichez la figure originale sans zoom
         return fig
@@ -107,23 +121,7 @@ def update_geos(clickData, selected_variable):
 
     fig_zoom.update_geos(
         center={'lon': country_lon, 'lat': country_lat},
-        visible=False,  # Pour éviter un saut de taille lors du centrage
-    )
-
-    fig_zoom.update_layout(
-        geo=dict(
-            projection_scale=2,
-            lonaxis=dict(range=[country_lon - 100, country_lon + 100]),
-            lataxis=dict(range=[country_lat - 35, country_lat + 35]),
-            showcountries=True,
-            showland=True,
-            showframe=True,
-            showlakes=True,
-            landcolor='lightgray',
-            countrycolor='gray',
-            framecolor='gray',
-            lakecolor='white',
-        )
+        projection_scale=5
     )
 
     return fig_zoom
@@ -143,33 +141,73 @@ def update_country_info(clickData, selected_variable):
         country_iso = clickData['points'][0]['location']
         country_row = df_selected_cla[df_selected_cla['ISO'] == country_iso]
         country_name = country_row['Country_FR'].values[0]
-        country_score = country_row['Score'].values[0]
-        country_rank = country_row['Rank'].values[0]
-        country_political = country_row['Political Context'].values[0]
-        country_rank_pol = country_row['Rank_Pol'].values[0]
-        country_economical = country_row['Economic Context'].values[0]
-        country_rank_eco = country_row['Rank_Eco'].values[0]
-        country_legal = country_row['Legal Context'].values[0]
-        country_rank_leg = country_row['Rank_Leg'].values[0]
-        country_social = country_row['Social Context'].values[0]
-        country_rank_eco = country_row['Rank_Soc'].values[0]
-        country_safety = country_row['Safety'].values[0]
-        country_rank_saf = country_row['Rank_Saf'].values[0]
-
         commun_style = {"margin-left": "10px"}
         border_style = {
             'border': 'solid grey',
             'borderRadius': '10px',
             'boxShadow': '2px 2px 4px 0 rgba(0,0,0,0.5)',
             'padding-bottom': '10px'}
-        return html.Div([
-            html.P(
-                f"Vous avez sélectionné {country_name}.", style=commun_style),
-            html.P(
-                f"Son score de liberté de la presse est {country_score}.", style=commun_style),
-            html.P(f"Son rang est {country_rank}.", style=commun_style)
-        ],
-            style=border_style),
+
+        if selected_variable == 'Score':
+            country_score = country_row['Score'].values[0]
+            country_rank = country_row['Rank'].values[0]
+            return html.Div([
+                html.P(
+                    f"Vous avez sélectionné {country_name}.", style=commun_style),
+                html.P(
+                    f"Son score de liberté de la presse est {country_score}.", style=commun_style),
+                html.P(f"Son rang est {country_rank}.", style=commun_style)
+            ], style=border_style)
+        elif selected_variable == 'Political Context':
+            country_political = country_row['Political Context'].values[0]
+            country_rank_pol = country_row['Rank_Pol'].values[0]
+            return html.Div([
+                html.P(
+                    f"Vous avez sélectionné {country_name}.", style=commun_style),
+                html.P(
+                    f"Son score de contexte politique est {country_political}.", style=commun_style),
+                html.P(f"Son rang est {country_rank_pol}.", style=commun_style)
+            ], style=border_style)
+        elif selected_variable == 'Economic Context':
+            country_economical = country_row['Economic Context'].values[0]
+            country_rank_eco = country_row['Rank_Eco'].values[0]
+            return html.Div([
+                html.P(
+                    f"Vous avez sélectionné {country_name}.", style=commun_style),
+                html.P(
+                    f"Son score de contexte économique est {country_economical}.", style=commun_style),
+                html.P(f"Son rang est {country_rank_eco}.", style=commun_style)
+            ], style=border_style)
+        elif selected_variable == 'Legal Context':
+            country_legal = country_row['Legal Context'].values[0]
+            country_rank_leg = country_row['Rank_Leg'].values[0]
+            return html.Div([
+                html.P(
+                    f"Vous avez sélectionné {country_name}.", style=commun_style),
+                html.P(
+                    f"Son score de contexte légal est {country_legal}.", style=commun_style),
+                html.P(f"Son rang est {country_rank_leg}.", style=commun_style)
+            ], style=border_style)
+        elif selected_variable == 'Social Context':
+            country_social = country_row['Social Context'].values[0]
+            country_rank_soc = country_row['Rank_Soc'].values[0]
+            return html.Div([
+                html.P(
+                    f"Vous avez sélectionné {country_name}.", style=commun_style),
+                html.P(
+                    f"Son score de contexte social est {country_social}.", style=commun_style),
+                html.P(f"Son rang est {country_rank_soc}.", style=commun_style)
+            ], style=border_style)
+        elif selected_variable == 'Safety':
+            country_safety = country_row['Safety'].values[0]
+            country_rank_saf = country_row['Rank_Saf'].values[0]
+            return html.Div([
+                html.P(
+                    f"Vous avez sélectionné {country_name}.", style=commun_style),
+                html.P(
+                    f"Son score de sécurité est {country_safety}.", style=commun_style),
+                html.P(f"Son rang est {country_rank_saf}.", style=commun_style)
+            ], style=border_style)
 
 
 @app.callback(Output("geolocation", "update_now"), Input("update_btn", "n_clicks"))
@@ -239,7 +277,7 @@ if __name__ == '__main__':
         html.H1("Carte du monde avec les coordonnées GPS des pays"),
         dcc.Graph(
             id='world-map',
-            figure=fig,
+            # figure=fig,
         ),
         html.Div(id='country-info')
     ], style={'marginRight': 150})
