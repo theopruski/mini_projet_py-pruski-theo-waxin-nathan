@@ -1,10 +1,10 @@
+# Import des bibliothèques nécessaires
 import dash
 from dash import dcc
 from dash import html
 from dash import dash_table
 import io
 from geopy.geocoders import Nominatim
-
 from dash.dependencies import Input, Output
 import csv
 import pandas as pd
@@ -14,7 +14,7 @@ import plotly.express as px
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
 
-# récupére et stocke les coordonnées gps de tous les pays dans un fichier csv
+# Fonction pour récupérer et stocker les coordonnées GPS de tous les pays dans un fichier CSV
 
 
 def recup_contry(url, name_csv):
@@ -25,47 +25,47 @@ def recup_contry(url, name_csv):
     df = pd.DataFrame(df[0])
     df.to_csv(name_csv, index=False)
 
-# def recup_liberte_press(url, name_csv):
-    # response = requests.get(url)
-    # soup = BeautifulSoup(response.text, 'html.parser')
-    # table_liberte = soup.find('table')
-    # df = pd.read_html(str(table_liberte))
-    # df.to_csv(name_csv, index=False)
 
-
+# Lien contenant les informations sur les pays
+# Appel de la fonction pour récupérer les coordonnées des pays et les stocker dans un fichier CSV
+# Lecture du fichier CSV contenant les coordonnées des pays
 info_pays = 'https://developers.google.com/public-data/docs/canonical/countries_csv'
 recup_contry(info_pays, "./data/country_coord.csv")
 df = pd.read_csv("./data/country_coord.csv")
 selected_columns = ['name', 'latitude', 'longitude']
 df_selected = df[selected_columns]
 
-# fig = px.scatter_geo(df_selected, lat='latitude', lon='longitude',
-# text='name', projection='natural earth')
-
 # url_classement = 'https://rsf.org/sites/default/files/import_classement/2023.csv'
+# Lecture du fichier CSV contenant le classement global des pays selon plusieurs critères pour 2023
 df_classement = pd.read_csv(
-    "./data/country_press_global_score_2023.csv", delimiter=';', decimal=',')
+    "./data/country_rsf_global_score_2023.csv", delimiter=';', decimal=',')
 selected_columns_classement = [
     'ISO', 'Country_FR', 'Country_EN', 'Score', 'Rank', 'Political Context', 'Rank_Pol',
     'Economic Context', 'Rank_Eco', 'Legal Context', 'Rank_Leg', 'Social Context', 'Rank_Soc', 'Safety', 'Rank_Saf']
 df_selected_cla = df_classement[selected_columns_classement]
 
+# Colonnes par défaut
 default_columns = ['Country_EN', 'Score', 'Rank']
 data_table = df_selected_cla[default_columns].to_dict('records')
 
+# Options pour la liste déroulante
 dropdown_options = [
-    {'label': 'Score Global', 'value': 'Score'},
-    {'label': 'Contexte politique', 'value': 'Political Context'},
-    {'label': 'Contexte économique', 'value': 'Economic Context'},
-    {'label': 'Contexte légal', 'value': 'Legal Context'},
-    {'label': 'Contexte social', 'value': 'Social Context'},
-    {'label': 'Sécurité', 'value': 'Safety'},
+    {'label': 'Score global', 'value': 'Score'},
+    {'label': 'Indicateur politique', 'value': 'Political Context'},
+    {'label': 'Indicateur économique', 'value': 'Economic Context'},
+    {'label': 'Indicateur législatif', 'value': 'Legal Context'},
+    {'label': 'Indicateur social', 'value': 'Social Context'},
+    {'label': 'Indicateur sécurité', 'value': 'Safety'},
 ]
 
+# Fusion des DataFrames contenant les coordonnées et le classement
 merged_df = pd.merge(df_selected, df_selected_cla,
                      how='inner', left_on='name', right_on='Country_EN')
 
+# Initialisation de l'application Dash
 app = dash.Dash(__name__)
+
+# Callback pour mettre à jour la carte du monde en fonction de la sélection
 
 
 @app.callback(
@@ -74,24 +74,25 @@ app = dash.Dash(__name__)
     Input('map-dropdown', 'value')
 )
 def update_geos(clickData, selected_variable):
+    # Échelles de couleurs pour chaque variable
     color_scale = {
         'Score': ['black', 'red', 'orange', 'yellow', 'green'],
         'Political Context': ['black', 'red', 'orange', 'yellow', 'green'],
         'Economic Context': ['black', 'red', 'orange', 'yellow', 'green'],
         'Legal Context': ['black', 'red', 'orange', 'yellow', 'green'],
         'Social Context': ['black', 'red', 'orange', 'yellow', 'green'],
-        'Safety': ['black', 'red', 'orange', 'yellow', 'green'],
-        # Ajoutez d'autres échelles de couleurs pour les autres contextes
+        'Safety': ['black', 'red', 'orange', 'yellow', 'green']
     }
+    # Titres pour chaque variable
     title_map = {
-        'Score': 'Carte du Monde avec Frontières et Scores de Liberté de la Presse',
-        'Political Context': 'Carte des Scores de Contexte Politique par pays',
-        'Economic Context': 'Carte des Scores de Contexte Economique par pays',
-        'Legal Context': 'Carte des Scores de Contexte Legal par pays',
-        'Social Context': 'Carte des Scores de Contexte Social par pays',
-        'Safety': 'Carte des Scores de Securite par pays',
-        # Ajoutez d'autres titres pour les autres contextes
+        'Score': 'Carte du monde avec score global par pays',
+        'Political Context': 'Carte du monde avec indicateur politique par pays',
+        'Economic Context': 'Carte du monde avec indicateur économique par pays',
+        'Legal Context': 'Carte du monde avec indicateur législatif par pays',
+        'Social Context': 'Carte du monde avec indicateur social par pays',
+        'Safety': 'Carte du monde avec indicateur sécurité par pays'
     }
+    # Création de la carte
     fig = px.choropleth(merged_df,
                         locations='ISO',
                         color=selected_variable,
@@ -108,8 +109,8 @@ def update_geos(clickData, selected_variable):
                         height=700,
                         )
 
+    # Gestion du zoom si un pays est sélectionné
     if clickData is None:
-        # Si aucun pays n'est sélectionné, affichez la figure originale sans zoom
         return fig
 
     country_iso = clickData['points'][0]['location']
@@ -127,7 +128,10 @@ def update_geos(clickData, selected_variable):
     return fig_zoom
 
 
+# Géolocalisation
 geolocator = Nominatim(user_agent="geo")
+
+# Callback pour mettre à jour les informations sur le pays sélectionné
 
 
 @app.callback(
@@ -148,6 +152,7 @@ def update_country_info(clickData, selected_variable):
             'boxShadow': '2px 2px 4px 0 rgba(0,0,0,0.5)',
             'padding-bottom': '10px'}
 
+        # Affichage des informations en fonction de la variable sélectionnée
         if selected_variable == 'Score':
             country_score = country_row['Score'].values[0]
             country_rank = country_row['Rank'].values[0]
@@ -155,8 +160,8 @@ def update_country_info(clickData, selected_variable):
                 html.P(
                     f"Vous avez sélectionné {country_name}.", style=commun_style),
                 html.P(
-                    f"Son score de liberté de la presse est {country_score}.", style=commun_style),
-                html.P(f"Son rang est {country_rank}.", style=commun_style)
+                    f"Son score global est {country_score}.", style=commun_style),
+                html.P(f"Rang : {country_rank}.", style=commun_style)
             ], style=border_style)
         elif selected_variable == 'Political Context':
             country_political = country_row['Political Context'].values[0]
@@ -165,8 +170,8 @@ def update_country_info(clickData, selected_variable):
                 html.P(
                     f"Vous avez sélectionné {country_name}.", style=commun_style),
                 html.P(
-                    f"Son score de contexte politique est {country_political}.", style=commun_style),
-                html.P(f"Son rang est {country_rank_pol}.", style=commun_style)
+                    f"Son indicateur politique est {country_political}.", style=commun_style),
+                html.P(f"Rang : {country_rank_pol}.", style=commun_style)
             ], style=border_style)
         elif selected_variable == 'Economic Context':
             country_economical = country_row['Economic Context'].values[0]
@@ -175,8 +180,8 @@ def update_country_info(clickData, selected_variable):
                 html.P(
                     f"Vous avez sélectionné {country_name}.", style=commun_style),
                 html.P(
-                    f"Son score de contexte économique est {country_economical}.", style=commun_style),
-                html.P(f"Son rang est {country_rank_eco}.", style=commun_style)
+                    f"Son indicateur économique est {country_economical}.", style=commun_style),
+                html.P(f"Rang : {country_rank_eco}.", style=commun_style)
             ], style=border_style)
         elif selected_variable == 'Legal Context':
             country_legal = country_row['Legal Context'].values[0]
@@ -185,8 +190,8 @@ def update_country_info(clickData, selected_variable):
                 html.P(
                     f"Vous avez sélectionné {country_name}.", style=commun_style),
                 html.P(
-                    f"Son score de contexte légal est {country_legal}.", style=commun_style),
-                html.P(f"Son rang est {country_rank_leg}.", style=commun_style)
+                    f"Son indicateur législatif est de {country_legal}.", style=commun_style),
+                html.P(f"Rang : {country_rank_leg}.", style=commun_style)
             ], style=border_style)
         elif selected_variable == 'Social Context':
             country_social = country_row['Social Context'].values[0]
@@ -195,8 +200,8 @@ def update_country_info(clickData, selected_variable):
                 html.P(
                     f"Vous avez sélectionné {country_name}.", style=commun_style),
                 html.P(
-                    f"Son score de contexte social est {country_social}.", style=commun_style),
-                html.P(f"Son rang est {country_rank_soc}.", style=commun_style)
+                    f"Son indicateur social est de {country_social}.", style=commun_style),
+                html.P(f"Rang : {country_rank_soc}.", style=commun_style)
             ], style=border_style)
         elif selected_variable == 'Safety':
             country_safety = country_row['Safety'].values[0]
@@ -205,14 +210,18 @@ def update_country_info(clickData, selected_variable):
                 html.P(
                     f"Vous avez sélectionné {country_name}.", style=commun_style),
                 html.P(
-                    f"Son score de sécurité est {country_safety}.", style=commun_style),
-                html.P(f"Son rang est {country_rank_saf}.", style=commun_style)
+                    f"Son indicateur de sécurité est de {country_safety}.", style=commun_style),
+                html.P(f"Rang : {country_rank_saf}.", style=commun_style)
             ], style=border_style)
+
+# Callback pour mettre à jour la géolocalisation en temps réel
 
 
 @app.callback(Output("geolocation", "update_now"), Input("update_btn", "n_clicks"))
 def update_now(click):
     return True if click and click > 0 else False
+
+# Callback pour afficher les informations de géolocalisation
 
 
 @app.callback(
@@ -229,12 +238,18 @@ def display_output(pos):
     return "Veuillez autoriser la localisation"
 
 
+# Configuration de l'application
 if __name__ == '__main__':
+
+    # Ajout du style CSS
     app.css.append_css({
         'external_url': 'https://codepen.io/chriddyp/pen/bWLwgP.css'
     })
+
+    # Mise en page de l'application
     app.layout = html.Div([
-        html.H1("Classement 2023 de la liberté de la presse"),
+        html.H1("Classement global 2023 par pays selon indicateurs politique, économique, législatif, social et de sécurité pour la presse"
+                " (Reporter Sans Frontière (RFS))"),
         dash_table.DataTable(
             id='table-classement',
             columns=[
@@ -244,17 +259,17 @@ if __name__ == '__main__':
                  "hideable": False},
                 {"id": "Rank", "name": "Rang Global", "hideable": False},
                 {"id": "Political Context",
-                    "name": "Contexte politique", "hideable": True},
+                    "name": "Indicateur politique", "hideable": True},
                 {"id": "Rank_Pol", "name": "Rang politique", "hideable": True},
                 {"id": "Economic Context",
-                    "name": "Contexte economique", "hideable": True},
+                    "name": "Indicateur économique", "hideable": True},
                 {"id": "Rank_Eco", "name": "Rang economique", "hideable": True},
-                {"id": "Legal Context", "name": "Contexte legal", "hideable": True},
-                {"id": "Rank_Leg", "name": "Rang legal", "hideable": True},
-                {"id": "Social Context", "name": "Contexte sociale", "hideable": True},
+                {"id": "Legal Context", "name": "Indicateur législatif", "hideable": True},
+                {"id": "Rank_Leg", "name": "Rang législatif", "hideable": True},
+                {"id": "Social Context", "name": "Indicateur sociale", "hideable": True},
                 {"id": "Rank_Soc", "name": "Rang sociale", "hideable": True},
                 {"id": "Safety", "name": "Securite", "hideable": True},
-                {"id": "Rank_Saf", "name": "Rang securite", "hideable": True}
+                {"id": "Rank_Saf", "name": "Indicateur sécurité", "hideable": True}
             ],
             sort_action='native',
             page_action='native',
