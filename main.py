@@ -249,7 +249,7 @@ if __name__ == '__main__':
     # Mise en page de l'application
     app.layout = html.Div([
         html.H1("Classement global 2023 par pays selon indicateurs politique, économique, législatif, social et de sécurité pour la presse"
-                " (Reporter Sans Frontière (RFS))"),
+                " (Reporters Sans Frontières (RFS))"),
         dash_table.DataTable(
             id='table-classement',
             columns=[
