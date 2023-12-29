@@ -24,11 +24,11 @@ Il faut installer certains modules Python : plotly, dash, pandas, geopy, bs4.
 
 Pour installer un module, utilisez la commande `pip install [module]`dans votre terminal. Pour mettre à jour un module déjà installé, utilisez la commande `pip install [module] --upgrade pip`.
 
-Après avoir fait tout cela, vous pourrez récupérer notre projet. Pour ce faire, copiez le projet en le clonant sur git ou en le téléchargeant au format .zip (n’oubliez pas de le décompresser si vous le téléchargez). Ensuite, allez sur votre terminal, ouvrez le fichier contenant le projet puis exécutez le projet via la commande : python main.py. Après avoir tapé la commande, un lien comme celui-ci apparaîtra : http://127.0.0.1:8050/ , il faudra donc cliquer dessus. Ce lien vous redirigera vers le tableau de bord de notre projet.
+Après avoir fait tout cela, vous pourrez récupérer notre projet. Pour ce faire, copiez le projet en le clonant sur git ou en le téléchargeant au format .zip (n’oubliez pas de le décompresser si vous le téléchargez). Ensuite, allez sur votre terminal, ouvrez le fichier contenant le projet puis exécutez le projet via la commande : `python main.py`. Après avoir tapé la commande, un lien comme celui-ci apparaîtra : http://127.0.0.1:8050/ , il faudra donc cliquer dessus. Ce lien vous redirigera vers le tableau de bord de notre projet.
 
 **Developer guide :**
 
-Pour installer Dash : pip install dash, pour installer pandas : `pip install pandas`, pour installer Plotly : `pip install plotly`, pour installer geopy : `pip install geopy`, pour installer bs4 : `pip install beautifulsoup4`.
+Pour installer Dash : `pip install dash`, pour installer pandas : `pip install pandas`, pour installer Plotly : `pip install plotly`, pour installer geopy : `pip install geopy`, pour installer bs4 : `pip install beautifulsoup4`.
 
 N’oubliez pas de faire les mises à jour des modules !
 
@@ -47,6 +47,8 @@ Après avoir fait cela, on pourra procéder à la création de notre code en sui
 * https://geopy.readthedocs.io/en/stable/
 
 **Rapport d’étude :**
+
+Notre étude porte sur le classement global de la liberté de la presse 2023 par pays selon les indicateurs politiques, économiques, législatifs, sociaux et de sécurité pour la presse. Un classement réalisé par Reporter Sans Frontières.
 
 ![Alt text](image/tableau_classement.png)
 
