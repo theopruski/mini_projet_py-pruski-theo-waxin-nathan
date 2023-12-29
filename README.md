@@ -11,6 +11,7 @@ Nous avons utilisé plusieurs jeux de données provenant du site Reporters Sans 
 * Indicateur législatif
 * Indicateur social
 * Indicateur sécurité
+
 Les données ont été récupérées sous format csv du site https://rsf.org/fr/classement?year=2023 et stocké dans un fichier csv disponible dans le dossier “data” de notre projet
 
 Nous avons aussi récupéré des données de géolocalisation provenant de l’api Google https://developers.google.com/public-data/docs/canonical/countries_csv?hl=en
