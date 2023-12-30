@@ -65,14 +65,17 @@ En cliquant sur le bouton “Géolocalisation”, on zoome sur notre pays.
 Ici, on peut visualiser la carte. 
 ![Alt text](image/carte_score_global.png)
 
+Vous pouvez gérer le zoom à l’aide de ceci qui apparaît en dirigeant la souris sur la carte.
 ![
     Vous pouvez gérer le zoom à l’aide de ceci qui apparaît en dirigeant la souris sur la carte.
 ](image/zoomin_zoomout_reset.png)
 
+Sur notre carte, on peut également choisir d’autres indicateurs.
 ![
     Sur notre carte, on peut également choisir d’autres indicateurs.
 ](image/dropdown_indicateurs.png)
 
+Quand on clique sur un pays, on a des informations concernant l’indicateur choisi.
 ![
     Quand on clique sur un pays, on a des informations concernant l’indicateur choisi.
 ](image/score_gloabl_france.png)
