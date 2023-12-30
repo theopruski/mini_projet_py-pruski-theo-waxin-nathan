@@ -48,15 +48,32 @@ Après avoir fait cela, on pourra procéder à la création de notre code en sui
 
 **Rapport d’étude :**
 
-Notre étude porte sur le classement global de la liberté de la presse 2023 par pays selon les indicateurs politiques, économiques, législatifs, sociaux et de sécurité pour la presse. Un classement réalisé par Reporter Sans Frontières.
+Notre étude porte sur le classement global de la liberté de la presse 2023 par pays selon les indicateurs politiques, économiques, législatifs, sociaux et de sécurité pour la presse. Un classement réalisé par Reporters Sans Frontières.
 
+D’abord, explication du fonctionnement de notre tableau de bord.
+
+Ci-dessous, on peut voir une partie du tableau qui affiche le score global. Les données sont récoltées sur 180 pays.
 ![Alt text](image/tableau_classement.png)
 
+Dans notre tableau, on peut également choisir d’autres indicateurs.
+![Alt text](image/dropdown_tableau.png)
 
+En cliquant sur le bouton “Géolocalisation”, on zoome sur notre pays. 
 ![Alt text](image/geolocalisation.png)
 
+Ici, on peut visualiser la carte. 
+![Alt text](image/carte_score_global.png)
 
+Vous pouvez gérer le zoom à l’aide de ceci qui apparaît en dirigeant la souris sur la carte.
+![Alt text](image/zoomin_zoomout_reset.png)
+
+Sur notre carte, on peut également choisir d’autres indicateurs.
 ![Alt text](image/dropdown_indicateurs.png)
 
+Quand on clique sur un pays, on a des informations concernant l’indicateur choisi.
+![Alt text](image/score_gloabl_france.png)
 
-![Alt text](image/carte_score_global.png)
+Maintenant, on va pouvoir se concentrer sur notre étude :
+
+Au début de notre tableau on constate que sur les 15 premiers pays, 12 pays sont situés en Europe.
+![Alt text](image/tableau_classement.png)

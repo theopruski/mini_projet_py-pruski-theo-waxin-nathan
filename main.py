@@ -62,6 +62,8 @@ dropdown_options = [
 merged_df = pd.merge(df_selected, df_selected_cla,
                      how='inner', left_on='name', right_on='Country_EN')
 
+geolocation_clicked = False
+
 # Initialisation de l'application Dash
 app = dash.Dash(__name__)
 
@@ -71,9 +73,12 @@ app = dash.Dash(__name__)
 @app.callback(
     Output('world-map', 'figure'),
     Input('world-map', 'clickData'),
-    Input('map-dropdown', 'value')
+    Input('map-dropdown', 'value'),
+    Input('geolocation', 'position'),
+    Input('update_btn', 'n_clicks')
 )
-def update_geos(clickData, selected_variable):
+def update_geos(clickData, selected_variable, geolocation_position, geolocation_btn_clicks):
+    global geolocation_clicked
     # Échelles de couleurs pour chaque variable
     color_scale = {
         'Score': ['black', 'red', 'orange', 'yellow', 'green'],
@@ -109,14 +114,19 @@ def update_geos(clickData, selected_variable):
                         height=700,
                         )
 
-    # Gestion du zoom si un pays est sélectionné
-    if clickData is None:
-        return fig
-
-    country_iso = clickData['points'][0]['location']
-    selected_country = merged_df[merged_df['ISO'] == country_iso]
-    country_lat = selected_country['latitude'].values[0]
-    country_lon = selected_country['longitude'].values[0]
+    # Gestion du zoom si un pays est sélectionné ou si la géolocalisation est disponible
+    if clickData is not None:
+        country_iso = clickData['points'][0]['location']
+        selected_country = merged_df[merged_df['ISO'] == country_iso]
+        country_lat = selected_country['latitude'].values[0]
+        country_lon = selected_country['longitude'].values[0]
+    elif geolocation_position is not None and geolocation_btn_clicks:
+        country_lat = geolocation_position['lat']
+        country_lon = geolocation_position['lon']
+        # Réinitialisez la variable d'état après avoir utilisé le clic
+        geolocation_clicked = False
+    else:
+        return fig  # Si aucune information de zoom n'est disponible, retournez simplement la figure sans modification
 
     fig_zoom = go.Figure(fig)
 
