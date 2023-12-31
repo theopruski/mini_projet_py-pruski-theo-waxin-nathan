@@ -77,3 +77,36 @@ Maintenant, on va pouvoir se concentrer sur notre étude :
 
 Au début de notre tableau on constate que sur les 15 premiers pays, 12 pays sont situés en Europe.
 ![Alt text](image/tableau_classement.png)
+
+Ce classement global est donc défini par des indicateurs.
+
+La Norvège : 
+![Alt text](image/norway_indicators_1.png)
+![Alt text](image/norway_indicator_2.png)
+![Alt text](image/norway.png)
+
+Classée 1ère, elle est un exemple de liberté de la presse. Son indicateur politique de 96.54 montre une forte indépendance politique des médias. L’indicateur économique de 92.46 indique une stabilité économique pour les médias. L’indicateur législatif de 94.92 montre un cadre juridique favorable. L’indicateur de sécurité de 95.98 témoigne d’un environnement sûr pour les journalistes.
+
+La Serbie : 
+![Alt text](image/serbia_indicators_1.png)
+![Alt text](image/serbia_indicator_2.png)
+![Alt text](image/serbia.png)
+
+Classée 91e, elle présente un tableau contrasté. Son indicateur politique est de 45.27, ce qui suggère des défis politiques pour les médias. L’indicateur économique est de 39.15, indiquant des défis économiques pour les médias. L’indicateur législatif est de 77.18, montrant un cadre juridique relativement solide. Cependant, l’indicateur de sécurité de 74.31 suggère des défis pour la sécurité des journalistes.
+
+Corée du Nord :
+![Alt text](image/north_korea_indicators_1.png)
+![Alt text](image/north_korea_indicators_2.png)
+![Alt text](image/north_korea.png)
+
+Classée 180e, elle montre une situation préoccupante. L’indicateur politique de 26.56 indique une forte influence politique sur les médias. L’indicateur économique de 21.57 suggère des difficultés économiques pour les médias. L’indicateur législatif de 22.64 montre un cadre juridique défavorable. L’indicateur de sécurité de 33.25 témoigne d’un environnement dangereux pour les journalistes.
+
+En conclusion, la Norvège, la Serbie et la Corée du Nord présentent des profils très différents en matière de liberté de la presse.
+La Norvège, classée première avec des scores élevés dans tous les indicateurs témoigne d’un environnement où les médias peuvent opérer librement et en toute sécurité.
+La Serbie, malgré des défis politiques et économiques à relever, elle dispose d’un cadre juridique solide et d’un indicateur de sécurité amélioré, ce qui suggère des efforts pour améliorer la liberté de la presse.
+La Corée du Nord, en revanche montre une situation préoccupante avec des scores faibles dans tous les indicateurs. Cela indique une restriction sévère de la liberté de la presse et un environnement difficile pour les journalistes.
+Ces comparaisons soulignent l’importance de l’indépendance politique, économique et législative pour la liberté de la presse. Chaque pays a ses propres défis et opportunités pour améliorer la liberté de la presse. Il est crucial de continuer à surveiller et à soutenir la liberté de la presse dans le monde entier
+
+En peut aussi relevé que les score sont moins élevés dans les pays en voie de développement (Asie, Afrique, Amérique du Sud)
+
+![Alt text](image/carte_score_global.png) ![Alt text](image/carte_indicateur_economique.png) ![Alt text](image/carte_indicateur_legislatif.png) ![Alt text](image/carte_indicateur_politique.png) ![Alt text](image/carte_indicateur_securite.png) ![Alt text](image/carte_indicateur_social.png)
