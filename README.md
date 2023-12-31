@@ -81,23 +81,24 @@ Au début de notre tableau on constate que sur les 15 premiers pays, 12 pays son
 Ce classement global est donc défini par des indicateurs.
 
 La Norvège : 
-![Alt text](image/norway_indicators_1.png)
-![Alt text](image/norway_indicator_2.png)
-![Alt text](image/norway.png)
+<img src="image/norway_indicators_1.png" width="50%" height="50%">
+<img src="image/norway_indicator_2.png" width="50%" height="50%">
+<img src="image/norway.png" width="50%" height="50%">
+
 
 Classée 1ère, elle est un exemple de liberté de la presse. Son indicateur politique de 96.54 montre une forte indépendance politique des médias. L’indicateur économique de 92.46 indique une stabilité économique pour les médias. L’indicateur législatif de 94.92 montre un cadre juridique favorable. L’indicateur de sécurité de 95.98 témoigne d’un environnement sûr pour les journalistes.
 
 La Serbie : 
-![Alt text](image/serbia_indicators_1.png)
-![Alt text](image/serbia_indicator_2.png)
-![Alt text](image/serbia.png)
+<img src="image/serbia_indicators_1.png" width="50%" height="50%">
+<img src="image/serbia_indicator_2.png" width="50%" height="50%">
+<img src="image/serbia.png" width="50%" height="50%">
 
 Classée 91e, elle présente un tableau contrasté. Son indicateur politique est de 45.27, ce qui suggère des défis politiques pour les médias. L’indicateur économique est de 39.15, indiquant des défis économiques pour les médias. L’indicateur législatif est de 77.18, montrant un cadre juridique relativement solide. Cependant, l’indicateur de sécurité de 74.31 suggère des défis pour la sécurité des journalistes.
 
 Corée du Nord :
-![Alt text](image/north_korea_indicators_1.png)
-![Alt text](image/north_korea_indicators_2.png)
-![Alt text](image/north_korea.png)
+<img src="image/north_korea_indicators_1.png" width="50%" height="50%">
+<img src="image/north_korea_indicators_2.png" width="50%" height="50%">
+<img src="image/north_korea.png" width="50%" height="50%">
 
 Classée 180e, elle montre une situation préoccupante. L’indicateur politique de 26.56 indique une forte influence politique sur les médias. L’indicateur économique de 21.57 suggère des difficultés économiques pour les médias. L’indicateur législatif de 22.64 montre un cadre juridique défavorable. L’indicateur de sécurité de 33.25 témoigne d’un environnement dangereux pour les journalistes.
 
