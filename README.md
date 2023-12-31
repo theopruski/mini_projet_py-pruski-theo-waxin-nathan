@@ -56,7 +56,7 @@ Ci-dessous, on peut voir une partie du tableau qui affiche le score global. Les 
 ![Alt text](image/tableau_classement.png)
 
 Dans notre tableau, on peut également choisir d’autres indicateurs.
-![Alt text](image/dropdown_tableau.png)
+<img src="image/dropdown_tableau.png" width="50%" height="50%">
 
 En cliquant sur le bouton “Géolocalisation”, on zoome sur notre pays. 
 ![Alt text](image/geolocalisation.png)
@@ -68,10 +68,10 @@ Vous pouvez gérer le zoom à l’aide de ceci qui apparaît en dirigeant la sou
 ![Alt text](image/zoomin_zoomout_reset.png)
 
 Sur notre carte, on peut également choisir d’autres indicateurs.
-![Alt text](image/dropdown_indicateurs.png)
+<img src="image/dropdown_indicateurs.png" width="50%" height="50%">
 
 Quand on clique sur un pays, on a des informations concernant l’indicateur choisi.
-![Alt text](image/score_gloabl_france.png)
+<img src="image/score_gloabl_france.png" width="50%" height="50%">
 
 Maintenant, on va pouvoir se concentrer sur notre étude :
 
