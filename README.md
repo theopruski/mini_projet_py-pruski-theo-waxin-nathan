@@ -56,7 +56,7 @@ Ci-dessous, on peut voir une partie du tableau qui affiche le score global. Les 
 ![Alt text](image/tableau_classement.png)
 
 Dans notre tableau, on peut également choisir d’autres indicateurs.
-<img src="image/dropdown_tableau.png" width="50%" height="50%">
+<img src="image/dropdown_tableau.png" width="25%" height="25%">
 
 En cliquant sur le bouton “Géolocalisation”, on zoome sur notre pays. 
 ![Alt text](image/geolocalisation.png)
@@ -68,10 +68,10 @@ Vous pouvez gérer le zoom à l’aide de ceci qui apparaît en dirigeant la sou
 ![Alt text](image/zoomin_zoomout_reset.png)
 
 Sur notre carte, on peut également choisir d’autres indicateurs.
-<img src="image/dropdown_indicateurs.png" width="50%" height="50%">
+<img src="image/dropdown_indicateurs.png" width="25%" height="25%">
 
 Quand on clique sur un pays, on a des informations concernant l’indicateur choisi.
-<img src="image/score_gloabl_france.png" width="50%" height="50%">
+<img src="image/score_gloabl_france.png" width="25%" height="25%">
 
 Maintenant, on va pouvoir se concentrer sur notre étude :
 
@@ -82,7 +82,7 @@ Ce classement global est donc défini par des indicateurs.
 
 La Norvège : 
 <img src="image/norway_indicators_1.png" width="50%" height="50%">
-<img src="image/norway_indicator_2.png" width="75%" height="75%">
+<img src="image/norway_indicator_2.png" width="100%" height="100%">
 <img src="image/norway.png" width="25%" height="25%">
 
 
@@ -90,14 +90,14 @@ Classée 1ère, elle est un exemple de liberté de la presse. Son indicateur pol
 
 La Serbie : 
 <img src="image/serbia_indicators_1.png" width="50%" height="50%">
-<img src="image/serbia_indicator_2.png" width="75%" height="75%">
+<img src="image/serbia_indicator_2.png" width="100%" height="100%">
 <img src="image/serbia.png" width="25%" height="25%">
 
 Classée 91e, elle présente un tableau contrasté. Son indicateur politique est de 45.27, ce qui suggère des défis politiques pour les médias. L’indicateur économique est de 39.15, indiquant des défis économiques pour les médias. L’indicateur législatif est de 77.18, montrant un cadre juridique relativement solide. Cependant, l’indicateur de sécurité de 74.31 suggère des défis pour la sécurité des journalistes.
 
 Corée du Nord :
 <img src="image/north_korea_indicators_1.png" width="50%" height="50%">
-<img src="image/north_korea_indicators_2.png" width="75%" height="75%">
+<img src="image/north_korea_indicators_2.png" width="100%" height="100%">
 <img src="image/north_korea.png" width="25%" height="25%">
 
 Classée 180e, elle montre une situation préoccupante. L’indicateur politique de 26.56 indique une forte influence politique sur les médias. L’indicateur économique de 21.57 suggère des difficultés économiques pour les médias. L’indicateur législatif de 22.64 montre un cadre juridique défavorable. L’indicateur de sécurité de 33.25 témoigne d’un environnement dangereux pour les journalistes.
