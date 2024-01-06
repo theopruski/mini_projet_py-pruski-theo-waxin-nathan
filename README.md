@@ -109,6 +109,6 @@ La Serbie, malgré des défis politiques et économiques à relever, elle dispos
 La Corée du Nord, en revanche montre une situation préoccupante avec des scores faibles dans tous les indicateurs. Cela indique une restriction sévère de la liberté de la presse et un environnement difficile pour les journalistes.
 Ces comparaisons soulignent l’importance de l’indépendance politique, économique et législative pour la liberté de la presse. Chaque pays a ses propres défis et opportunités pour améliorer la liberté de la presse. Il est crucial de continuer à surveiller et à soutenir la liberté de la presse dans le monde entier.
 
-En peut aussi relevé que les score sont moins élevés dans les pays en voie de développement (Asie, Afrique, Amérique du Sud)
+On peut aussi relevé que les score sont moins élevés dans les pays en voie de développement (Asie, Afrique, Amérique du Sud) :
 
 ![Alt text](image/carte_score_global.png) ![Alt text](image/carte_indicateur_economique.png) ![Alt text](image/carte_indicateur_legislatif.png) ![Alt text](image/carte_indicateur_politique.png) ![Alt text](image/carte_indicateur_securite.png) ![Alt text](image/carte_indicateur_social.png)

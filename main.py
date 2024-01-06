@@ -164,7 +164,7 @@ def update_country_info(clickData, selected_variable):
     else:
         country_iso = clickData['points'][0]['location']
         country_row = df_selected_cla[df_selected_cla['ISO'] == country_iso]
-        country_name = country_row['Country_FR'].values[0]
+        country_name = country_row['Country_EN'].values[0]
         commun_style = {"margin-left": "10px"}
         border_style = {
             'border': 'solid grey',
