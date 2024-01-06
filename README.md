@@ -59,7 +59,7 @@ Ci-dessous, on peut voir une partie du tableau qui affiche le score global. Les 
 Dans notre tableau, on peut également choisir d’autres indicateurs.
 <br><img src="image/dropdown_tableau.png" width="25%" height="25%">
 
-En cliquant sur le bouton “Géolocalisation”, on zoome sur notre pays. 
+En cliquant sur le bouton “Geolocation”, on zoome sur notre pays. 
 ![Alt text](image/geolocalisation.png)
 
 Ici, on peut visualiser la carte. 
