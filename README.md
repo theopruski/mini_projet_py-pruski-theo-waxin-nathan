@@ -72,7 +72,7 @@ Sur notre carte, on peut également choisir d’autres indicateurs.
 <br><img src="image/dropdown_indicateurs.png" width="25%" height="25%">
 
 Quand on clique sur un pays, on a des informations concernant l’indicateur choisi.
-<br><img src="image/score_gloabl_france.png" width="25%" height="25%">
+<br><img src="image/score_gloabl_france.png" width="50%" height="50%">
 
 Maintenant, on va pouvoir se concentrer sur notre étude :
 
@@ -82,7 +82,7 @@ Au début de notre tableau on constate que sur les 15 premiers pays, 12 pays son
 Ce classement global est donc défini par des indicateurs.
 
 La Norvège : 
-<br><img src="image/norway_indicators_1.png" width="50%" height="50%">
+<br><img src="image/norway_indicators_1.png" width="100%" height="100%">
 <br><img src="image/norway_indicator_2.png" width="100%" height="100%">
 <br><img src="image/norway.png" width="25%" height="25%">
 
@@ -90,14 +90,14 @@ La Norvège :
 Classée 1ère, elle est un exemple de liberté de la presse. Son indicateur politique de 96.54 montre une forte indépendance politique des médias. L’indicateur économique de 92.46 indique une stabilité économique pour les médias. L’indicateur législatif de 94.92 montre un cadre juridique favorable. L’indicateur de sécurité de 95.98 témoigne d’un environnement sûr pour les journalistes.
 
 La Serbie : 
-<br><img src="image/serbia_indicators_1.png" width="50%" height="50%">
+<br><img src="image/serbia_indicators_1.png" width="100%" height="100%">
 <br><img src="image/serbia_indicator_2.png" width="100%" height="100%">
 <br><img src="image/serbia.png" width="25%" height="25%">
 
 Classée 91e, elle présente un tableau contrasté. Son indicateur politique est de 45.27, ce qui suggère des défis politiques pour les médias. L’indicateur économique est de 39.15, indiquant des défis économiques pour les médias. L’indicateur législatif est de 77.18, montrant un cadre juridique relativement solide. Cependant, l’indicateur de sécurité de 74.31 suggère des défis pour la sécurité des journalistes.
 
 Corée du Nord :
-<br><img src="image/north_korea_indicators_1.png" width="50%" height="50%">
+<br><img src="image/north_korea_indicators_1.png" width="100%" height="100%">
 <br><img src="image/north_korea_indicators_2.png" width="100%" height="100%">
 <br><img src="image/north_korea.png" width="25%" height="25%">
 

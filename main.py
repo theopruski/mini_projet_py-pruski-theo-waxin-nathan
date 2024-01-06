@@ -36,7 +36,6 @@ df = pd.read_csv("./data/country_coord.csv")
 selected_columns = ['name', 'latitude', 'longitude']
 df_selected = df[selected_columns]
 
-# url_classement = 'https://rsf.org/sites/default/files/import_classement/2023.csv'
 # Lecture du fichier CSV contenant le classement global des pays selon plusieurs critères pour 2023
 df_classement = pd.read_csv(
     "./data/country_rsf_global_score_2023.csv", delimiter=';', decimal=',')
