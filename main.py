@@ -17,6 +17,7 @@ import dash_bootstrap_components as dbc
 
 # Fonction pour récupérer et stocker les coordonnées GPS de tous les pays dans un fichier CSV
 
+
 def recup_contry(url, name_csv):
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
@@ -66,8 +67,8 @@ geolocation_clicked = False
 
 # Initialisation de l'application Dash
 app = dash.Dash(__name__,
-    external_stylesheets=[dbc.themes.BOOTSTRAP]
-    )
+                external_stylesheets=[dbc.themes.BOOTSTRAP]
+                )
 
 # Callback pour mettre à jour la carte du monde en fonction de la sélection
 
@@ -158,7 +159,7 @@ geolocator = Nominatim(user_agent="geo")
     Input('map-dropdown', 'value'))
 def update_country_info(clickData, selected_variable):
     if clickData is None:
-        return html.Div("Click on a country to see more information.", 
+        return html.Div("Click on a country to see more information.",
                         className="mr-3",
                         style={'marginLeft': 100})
     else:
@@ -276,62 +277,67 @@ if __name__ == '__main__':
         html.H1("Global ranking 2023 by country according to political, economic, legislative, social and security indicators for the press"
                 " (Reporters Without Borders (RWB))", className='text-center', style={'backgroundColor': "#d5e3ff"}),
         html.Div([
-        dash_table.DataTable(
-            id='table-classement',
-            columns=[
-                {"id": "Country_EN", "name": "Nom", "hideable": False},
-                {"id": "Score", "name": "Global Score",
-                 "hideable": False},
-                {"id": "Rank", "name": "Global Rank", "hideable": False},
-                {"id": "Political Context",
-                    "name": "Political indicator", "hideable": True},
-                {"id": "Rank_Pol", "name": "Political rank", "hideable": True},
-                {"id": "Economic Context",
-                    "name": "Economic indicator", "hideable": True},
-                {"id": "Rank_Eco", "name": "Economic rank", "hideable": True},
-                {"id": "Legal Context", "name": "Legislative indicator", "hideable": True},
-                {"id": "Rank_Leg", "name": "Legislative rank", "hideable": True},
-                {"id": "Social Context", "name": "Social indicator", "hideable": True},
-                {"id": "Rank_Soc", "name": "Social rank", "hideable": True},
-                {"id": "Safety", "name": "Security", "hideable": True},
-                {"id": "Rank_Saf", "name": "Security indicator", "hideable": True}
-            ],
-            sort_action='native',
-            page_action='native',
-            page_current=0,
-            page_size=15,
-            style_cell={'textAlign': 'left', 'minWidth': '150px', 'width': '150px', 'maxWidth': '150px'},
-            hidden_columns=['Political Context', 'Rank_Pol', 'Economic Context', 'Rank_Eco',
-                            'Legal Context', 'Rank_Leg', 'Social Context', 'Rank_Soc', 'Safety', 'Rank_Saf'],
-            data=df_selected_cla.to_dict('records'),
-            style_data={
-                'backgroundColor': 'lightblue',  # Exemple de couleur de fond pour les cellules
-                'color': 'black'  # Couleur du texte des cellules
-            },
-        ), 
+            dash_table.DataTable(
+                id='table-classement',
+                columns=[
+                    {"id": "Country_EN", "name": "Name", "hideable": False},
+                    {"id": "Score", "name": "Global Score",
+                     "hideable": False},
+                    {"id": "Rank", "name": "Global Rank", "hideable": False},
+                    {"id": "Political Context",
+                     "name": "Political indicator", "hideable": True},
+                    {"id": "Rank_Pol", "name": "Political rank", "hideable": True},
+                    {"id": "Economic Context",
+                     "name": "Economic indicator", "hideable": True},
+                    {"id": "Rank_Eco", "name": "Economic rank", "hideable": True},
+                    {"id": "Legal Context",
+                        "name": "Legislative indicator", "hideable": True},
+                    {"id": "Rank_Leg", "name": "Legislative rank", "hideable": True},
+                    {"id": "Social Context",
+                        "name": "Social indicator", "hideable": True},
+                    {"id": "Rank_Soc", "name": "Social rank", "hideable": True},
+                    {"id": "Safety", "name": "Security", "hideable": True},
+                    {"id": "Rank_Saf", "name": "Security indicator", "hideable": True}
+                ],
+                sort_action='native',
+                page_action='native',
+                page_current=0,
+                page_size=15,
+                style_cell={'textAlign': 'left', 'minWidth': '150px',
+                            'width': '150px', 'maxWidth': '150px'},
+                hidden_columns=['Political Context', 'Rank_Pol', 'Economic Context', 'Rank_Eco',
+                                'Legal Context', 'Rank_Leg', 'Social Context', 'Rank_Soc', 'Safety', 'Rank_Saf'],
+                data=df_selected_cla.to_dict('records'),
+                style_data={
+                    'backgroundColor': 'lightblue',  # Exemple de couleur de fond pour les cellules
+                    'color': 'black'  # Couleur du texte des cellules
+                },
+            ),
         ], style={'marginRight': 150}),
-        html.H1("World map with country GPS coordinates", className='text-center'),
+        html.H1("World map with country GPS coordinates",
+                className='text-center'),
         html.Div([
-            
-            dbc.Button("Geolocation", id="update_btn", color="primary", className="mt-3"),
+
+            dbc.Button("Geolocation", id="update_btn",
+                       color="primary", className="mt-3"),
             dcc.Geolocation(id="geolocation"),
             html.Div(id="text_position", className="mt-1"),
             dcc.Dropdown(
-            id='map-dropdown',
-            options=dropdown_options,
-            value='Score',  # Valeur par défaut
-            multi=False  # Permettre la sélection unique
+                id='map-dropdown',
+                options=dropdown_options,
+                value='Score',  # Valeur par défaut
+                multi=False  # Permettre la sélection unique
             ),
         ],
-        style={ 'border': 'solid grey',
-                'boxShadow': '2px 2px 4px 0 rgba(0,0,0,0.5)',
-                'margin-bottom:': '5rem',
-                'marginLeft': 60, 
-                'marginRight': 150, 
-                'backgroundColor': '#d5e3ff', 
-                'padding': '1rem', 
-                'border-radius':'1rem'}),
-        
+            style={'border': 'solid grey',
+                   'boxShadow': '2px 2px 4px 0 rgba(0,0,0,0.5)',
+                   'margin-bottom:': '5rem',
+                   'marginLeft': 60,
+                   'marginRight': 150,
+                   'backgroundColor': '#d5e3ff',
+                   'padding': '1rem',
+                   'border-radius': '1rem'}),
+
         dcc.Graph(
             id='world-map',
             # figure=fig,

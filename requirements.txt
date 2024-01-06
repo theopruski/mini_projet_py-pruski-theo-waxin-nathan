@@ -3,3 +3,4 @@ Plotly : https://pypi.org/project/plotly/
 Dash : https://pypi.org/project/dash/
 Geopy : (https://pypi.org/project/geopy/
 BeautifulSoup (bs4) : https://pypi.org/project/beautifulsoup4/
+Dash-Bootstrap-Components : https://pypi.org/project/dash-bootstrap-components/

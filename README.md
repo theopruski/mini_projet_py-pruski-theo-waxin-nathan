@@ -28,7 +28,7 @@ Après avoir fait tout cela, vous pourrez récupérer notre projet. Pour ce fair
 
 **Developer guide :**
 
-Pour installer Dash : `pip install dash`, pour installer pandas : `pip install pandas`, pour installer Plotly : `pip install plotly`, pour installer geopy : `pip install geopy`, pour installer bs4 : `pip install beautifulsoup4`.
+Pour installer Dash : `pip install dash`, pour installer pandas : `pip install pandas`, pour installer Plotly : `pip install plotly`, pour installer geopy : `pip install geopy`, pour installer bs4 : `pip install beautifulsoup4`, pour installer dash_bootstrap_components : `pip install dash_bootstrap_components`.
 
 N’oubliez pas de faire les mises à jour des modules !
 
@@ -45,6 +45,7 @@ Après avoir fait cela, on pourra procéder à la création de notre code en sui
 * https://plotly.com/python/
 * https://pandas.pydata.org/docs/
 * https://geopy.readthedocs.io/en/stable/
+* https://dash-bootstrap-components.opensource.faculty.ai/docs/
 
 **Rapport d’étude :**
 
@@ -106,7 +107,7 @@ En conclusion, la Norvège, la Serbie et la Corée du Nord présentent des profi
 La Norvège, classée première avec des scores élevés dans tous les indicateurs témoigne d’un environnement où les médias peuvent opérer librement et en toute sécurité.
 La Serbie, malgré des défis politiques et économiques à relever, elle dispose d’un cadre juridique solide et d’un indicateur de sécurité amélioré, ce qui suggère des efforts pour améliorer la liberté de la presse.
 La Corée du Nord, en revanche montre une situation préoccupante avec des scores faibles dans tous les indicateurs. Cela indique une restriction sévère de la liberté de la presse et un environnement difficile pour les journalistes.
-Ces comparaisons soulignent l’importance de l’indépendance politique, économique et législative pour la liberté de la presse. Chaque pays a ses propres défis et opportunités pour améliorer la liberté de la presse. Il est crucial de continuer à surveiller et à soutenir la liberté de la presse dans le monde entier
+Ces comparaisons soulignent l’importance de l’indépendance politique, économique et législative pour la liberté de la presse. Chaque pays a ses propres défis et opportunités pour améliorer la liberté de la presse. Il est crucial de continuer à surveiller et à soutenir la liberté de la presse dans le monde entier.
 
 En peut aussi relevé que les score sont moins élevés dans les pays en voie de développement (Asie, Afrique, Amérique du Sud)
 
